@@ -9,6 +9,8 @@ export function vitePluginExportType() {
   const TYPEREG = /\w+\s*<(\w+)>\s*\(/gm
   const EXPORTINTERFACE = /export\s+interface\s+([\w]+)\s*({[\w\s:,;]+})/gm
   const EXPORTTYPE = /export\s+type\s+([\w]+)\s*=\s*({[\w\s:,;]+})/gm
+  const EXPORTTYPEEQUAL = /export\s+type\s+([\w]+)\s*=\s*([\w]+)/gm
+  const SCRIPT = /<script[\s\w"'=]*>/
   return {
     name: 'vite-plugin-export-type',
     enforce: 'pre',
@@ -25,7 +27,6 @@ export function vitePluginExportType() {
       if (!Object.keys(imports).length)
         return
       let index = 0
-
       return await new Promise(resolve => source.replace(TYPEREG, (_: string, type: string) => {
         index++
         const source = imports[type]
@@ -36,23 +37,39 @@ export function vitePluginExportType() {
         // 处理文件夹路径
         if (!isExists)
           url = path.resolve(path.dirname(id), `${source}/index.ts`)
-        const isFind = false
+        let isFind = false
+
         fsp.readFile(url, 'utf-8').then((content) => {
           index--
           content.replace(EXPORTINTERFACE, (_: string, name: string, val: string) => {
             if (name !== type)
               return ''
+            isFind = true
             src = src.replace(removeImport, `interface ${name} ${val}`)
+            if (index === 0)
+              resolve(src)
+            return ''
+          })
+
+          if (isFind)
+            return src
+          content.replace(EXPORTTYPE, (_, name, val) => {
+            if (name !== type)
+              return ''
+            isFind = true
+
+            src = src.replace(removeImport, `type ${name}${val}`)
             if (index === 0)
               resolve(src)
             return ''
           })
           if (isFind)
             return src
-          content.replace(EXPORTTYPE, (_, name, val) => {
-            if (name !== type)
-              return ''
-            src = src.replace(removeImport, `type ${name}${val}`)
+          content.replace(EXPORTTYPEEQUAL, (_, name, val) => {
+            const regType = new RegExp(`type\\s*(${val})\\s*=\\w+`, 'g')
+            const regInterface = new RegExp(`interface\\s*(${val})\\s*{[\\w\\s"',;:]+}`, 'g')
+            content.replace(regType, (_, v) => src = src.replace(removeImport, () => _.replace(v, name)))
+            content.replace(regInterface, (_, v) => src = src.replace(removeImport, () => _.replace(v, name)))
             if (index === 0)
               resolve(src)
             return ''
