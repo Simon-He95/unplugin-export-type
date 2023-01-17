@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-export-type",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "packageManager": "pnpm@7.18.2",
   "description": "vite-plugin-export-type",
   "author": "Simon He",
