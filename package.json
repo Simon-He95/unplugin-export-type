@@ -1,6 +1,6 @@
 {
   "name": "unplugin-export-type",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "packageManager": "pnpm@7.18.2",
   "description": "unplugin-export-type",
   "author": "Simon He",
