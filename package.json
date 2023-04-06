@@ -1,19 +1,19 @@
 {
-  "name": "vite-plugin-export-type",
+  "name": "unplugin-export-type",
   "version": "0.0.3",
-  "packageManager": "pnpm@7.26.1",
-  "description": "vite-plugin-export-type",
+  "packageManager": "pnpm@7.18.2",
+  "description": "unplugin-export-type",
   "author": "Simon He",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git + git@github.com:Simon-He95/vite-plugin-export-type.git"
+    "url": "git + git@github.com:Simon-He95/unplugin-export-type.git"
   },
   "bugs": {
-    "url": "https://github.com/Simon-He95/vite-plugin-export-type/issues"
+    "url": "https://github.com/Simon-He95/unplugin-export-type/issues"
   },
   "keywords": [
-    "vite-plugin-export-type",
+    "unplugin-export-type",
     "vue"
   ],
   "exports": {
@@ -76,6 +76,7 @@
     "tsup": "^6.5.0",
     "tsx": "^3.12.1",
     "typescript": "^4.8.4",
+    "unplugin": "^1.3.1",
     "vite": "^4.0.0",
     "vitest": "^0.13.1"
   },

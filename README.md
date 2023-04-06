@@ -1,4 +1,4 @@
-# vite-plugin-export-type
+# unplugin-export-type
 为了支持在vue3中setup语法不支持动态导入类型而写的plugin
 
 ## Resolve
@@ -8,8 +8,84 @@
 ## Install
 ![install](/assets/install.png)
 
-## Usage
-![use](/assets/use.png)
+## 🌈 Usage
+
+<details>
+<summary>Vite</summary>
+
+```ts
+// vite.config.ts
+import { vitePluginPlugin } from 'unplugin-export-type'
+export default defineConfig({
+  plugins: [vitePluginPlugin(/* options */)],
+})
+```
+
+</details>
+<br>
+<details>
+<summary>Rollup</summary>
+
+```ts
+// rollup.config.js
+import { resolve } from 'path'
+import { rollupPlugin } from 'unplugin-export-type'
+export default {
+  plugins: [rollupPlugin(/* options */)],
+}
+```
+
+</details>
+<br>
+<details>
+<summary>Webpack</summary>
+
+```ts
+// webpack.config.js
+module.exports = {
+  /* ... */
+  plugins: [
+    require('unplugin-export-type').webpackPlugin({
+      /* options */
+    }),
+  ],
+}
+```
+
+</details>
+<br>
+<details>
+<summary>Vue CLI</summary>
+
+```ts
+// vue.config.js
+module.exports = {
+  configureWebpack: {
+    plugins: [
+      require('unplugin-export-type').webpackPlugin({
+        /* options */
+      }),
+    ],
+  },
+}
+```
+
+</details>
+<br>
+<details>
+<summary>Esbuild</summary>
+
+```ts
+// esbuild.config.js
+import { build } from 'esbuild'
+import { esbuildPlugin } from 'unplugin-export-type'
+
+build({
+  plugins: [esbuildPlugin(/* options */)],
+})
+```
+
+</details>
 
 [Example](./playground/src/components/Footer.vue)
 
